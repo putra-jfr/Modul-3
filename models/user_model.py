@@ -1,3 +1,4 @@
+
 import hashlib
 from config.database import Database
 
@@ -5,15 +6,25 @@ from config.database import Database
 class UserModel:
     def __init__(self):
         self.db = Database()
+        self.conn = None
 
     # Mengubah password menjadi hash SHA-256
     @staticmethod
     def hash_password(password):
-        return hashlib.sha256(password.encode("utf-8")).hexdigest()
+        return hashlib.sha256(
+            password.encode("utf-8")
+        ).hexdigest()
+
+    # Mengambil koneksi database
+    def get_connection(self):
+        if self.conn is not None:
+            return self.conn, False
+
+        return self.db.get_connection(), True
 
     # Proses autentikasi pengguna
     def authenticate(self, username, password):
-        conn = self.db.get_connection()
+        conn, owned = self.get_connection()
 
         if conn is None:
             return None
@@ -42,7 +53,9 @@ class UserModel:
         finally:
             if cursor:
                 cursor.close()
-            conn.close()
+
+            if owned:
+                conn.close()
 
     # Registrasi pengguna baru
     def register_user(self, username, password, role="anggota"):
@@ -52,7 +65,7 @@ class UserModel:
         if role not in ("admin", "anggota"):
             return False
 
-        conn = self.db.get_connection()
+        conn, owned = self.get_connection()
 
         if conn is None:
             return False
@@ -83,4 +96,6 @@ class UserModel:
         finally:
             if cursor:
                 cursor.close()
-            conn.close()
+
+            if owned:
+                conn.close()
