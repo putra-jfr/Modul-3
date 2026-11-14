@@ -1,3 +1,4 @@
+
 import customtkinter as ctk
 from tkinter import ttk
 
@@ -7,11 +8,11 @@ class BukuView(ctk.CTk):
         super().__init__()
 
         self.title("Sistem Manajemen Perpustakaan")
-        self.geometry("800x450")
+        self.geometry("800x500")
 
-        # Konfigurasi Grid Utama (1 Baris, 2 Kolom)
-        self.grid_columnconfigure(0, weight=1)  # Kolom Kiri
-        self.grid_columnconfigure(1, weight=2)  # Kolom Kanan (Tabel lebih lebar)
+        # Konfigurasi Grid Utama
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=2)
         self.grid_rowconfigure(0, weight=1)
 
         # ==================================================
@@ -43,7 +44,6 @@ class BukuView(ctk.CTk):
             self.frame_kiri,
             placeholder_text="Masukkan Judul Buku"
         )
-
         self.entry_judul.pack(
             pady=10,
             padx=15,
@@ -55,7 +55,6 @@ class BukuView(ctk.CTk):
             self.frame_kiri,
             placeholder_text="Masukkan Nama Penulis"
         )
-
         self.entry_penulis.pack(
             pady=10,
             padx=15,
@@ -67,7 +66,6 @@ class BukuView(ctk.CTk):
             self.frame_kiri,
             placeholder_text="Tahun Terbit (Misal: 2024)"
         )
-
         self.entry_tahun.pack(
             pady=10,
             padx=15,
@@ -82,43 +80,53 @@ class BukuView(ctk.CTk):
         self.btn_simpan = ctk.CTkButton(
             self.frame_kiri,
             text="Simpan Data",
-            fg_color="green"
+            fg_color="green",
+            hover_color="darkgreen"
         )
-
         self.btn_simpan.pack(
             pady=10,
             padx=15,
             fill="x"
         )
 
-        # ==================================================
-        # TAMBAHAN TOMBOL UPDATE
-        # ==================================================
-
+        # Tombol Perbarui Data
         self.btn_update = ctk.CTkButton(
             self.frame_kiri,
-            text="Perbarui Data (Update)",
-            fg_color="blue"
+            text="Perbarui Data",
+            fg_color="blue",
+            hover_color="darkblue"
         )
-
         self.btn_update.pack(
             pady=5,
             padx=15,
             fill="x"
         )
 
-        # ==================================================
-        # TAMBAHAN TOMBOL DELETE
-        # ==================================================
-
-        self.btn_delete = ctk.CTkButton(
+        # Tombol Hapus Data
+        self.btn_hapus = ctk.CTkButton(
             self.frame_kiri,
-            text="Hapus Data (Delete)",
-            fg_color="red"
+            text="Hapus Data",
+            fg_color="red",
+            hover_color="darkred"
+        )
+        self.btn_hapus.pack(
+            pady=5,
+            padx=15,
+            fill="x"
         )
 
-        self.btn_delete.pack(
-            pady=5,
+        # ==================================================
+        # TOMBOL LOGOUT
+        # ==================================================
+
+        self.btn_logout = ctk.CTkButton(
+            self.frame_kiri,
+            text="Logout",
+            fg_color="gray",
+            hover_color="darkgray"
+        )
+        self.btn_logout.pack(
+            pady=15,
             padx=15,
             fill="x"
         )
@@ -165,25 +173,10 @@ class BukuView(ctk.CTk):
         # KONFIGURASI HEADER TABEL
         # ==================================================
 
-        self.tabel.heading(
-            "id",
-            text="ID"
-        )
-
-        self.tabel.heading(
-            "judul",
-            text="Judul Buku"
-        )
-
-        self.tabel.heading(
-            "penulis",
-            text="Penulis"
-        )
-
-        self.tabel.heading(
-            "tahun",
-            text="Tahun"
-        )
+        self.tabel.heading("id", text="ID")
+        self.tabel.heading("judul", text="Judul Buku")
+        self.tabel.heading("penulis", text="Penulis")
+        self.tabel.heading("tahun", text="Tahun")
 
         # ==================================================
         # KONFIGURASI LEBAR KOLOM
