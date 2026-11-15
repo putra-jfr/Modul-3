@@ -15,12 +15,11 @@ class BukuView(ctk.CTk):
         self.grid_columnconfigure(1, weight=2)
         self.grid_rowconfigure(0, weight=1)
 
-        # ==================================================
-        # FRAME KIRI: FORMULIR INPUT BUKU
-        # ==================================================
+        # ==========================================
+        # FRAME KIRI: FORM DATA BUKU
+        # ==========================================
 
         self.frame_kiri = ctk.CTkFrame(self)
-
         self.frame_kiri.grid(
             row=0,
             column=0,
@@ -35,11 +34,7 @@ class BukuView(ctk.CTk):
             font=("Arial", 16, "bold")
         ).pack(pady=15)
 
-        # ==================================================
-        # KOMPONEN INPUT
-        # ==================================================
-
-        # Input Judul Buku
+        # Input Judul
         self.entry_judul = ctk.CTkEntry(
             self.frame_kiri,
             placeholder_text="Masukkan Judul Buku"
@@ -61,10 +56,10 @@ class BukuView(ctk.CTk):
             fill="x"
         )
 
-        # Input Tahun Terbit
+        # Input Tahun
         self.entry_tahun = ctk.CTkEntry(
             self.frame_kiri,
-            placeholder_text="Tahun Terbit (Misal: 2024)"
+            placeholder_text="Tahun Terbit"
         )
         self.entry_tahun.pack(
             pady=10,
@@ -72,11 +67,11 @@ class BukuView(ctk.CTk):
             fill="x"
         )
 
-        # ==================================================
+        # ==========================================
         # TOMBOL AKSI
-        # ==================================================
+        # ==========================================
 
-        # Tombol Simpan Data
+        # Tombol Simpan
         self.btn_simpan = ctk.CTkButton(
             self.frame_kiri,
             text="Simpan Data",
@@ -84,12 +79,12 @@ class BukuView(ctk.CTk):
             hover_color="darkgreen"
         )
         self.btn_simpan.pack(
-            pady=10,
+            pady=8,
             padx=15,
             fill="x"
         )
 
-        # Tombol Perbarui Data
+        # Tombol Update
         self.btn_update = ctk.CTkButton(
             self.frame_kiri,
             text="Perbarui Data",
@@ -102,7 +97,7 @@ class BukuView(ctk.CTk):
             fill="x"
         )
 
-        # Tombol Hapus Data
+        # Tombol Hapus
         self.btn_hapus = ctk.CTkButton(
             self.frame_kiri,
             text="Hapus Data",
@@ -115,10 +110,7 @@ class BukuView(ctk.CTk):
             fill="x"
         )
 
-        # ==================================================
-        # TOMBOL LOGOUT
-        # ==================================================
-
+        # Tombol Logout
         self.btn_logout = ctk.CTkButton(
             self.frame_kiri,
             text="Logout",
@@ -126,17 +118,16 @@ class BukuView(ctk.CTk):
             hover_color="darkgray"
         )
         self.btn_logout.pack(
-            pady=15,
+            pady=10,
             padx=15,
             fill="x"
         )
 
-        # ==================================================
-        # FRAME KANAN: TABEL DAFTAR BUKU
-        # ==================================================
+        # ==========================================
+        # FRAME KANAN: TABEL BUKU
+        # ==========================================
 
         self.frame_kanan = ctk.CTkFrame(self)
-
         self.frame_kanan.grid(
             row=0,
             column=1,
@@ -151,9 +142,44 @@ class BukuView(ctk.CTk):
             font=("Arial", 16, "bold")
         ).pack(pady=15)
 
-        # ==================================================
-        # KOMPONEN TABEL
-        # ==================================================
+        # ==========================================
+        # STYLE TABEL
+        # ==========================================
+
+        style = ttk.Style()
+
+        style.theme_use("default")
+
+        style.configure(
+            "Buku.Treeview",
+            background="white",
+            foreground="black",
+            rowheight=27,
+            fieldbackground="white",
+            font=("Arial", 10)
+        )
+
+        style.configure(
+            "Buku.Treeview.Heading",
+            background="#D9D9D9",
+            foreground="black",
+            font=("Arial", 10, "bold")
+        )
+
+        # Warna ketika baris dipilih
+        style.map(
+            "Buku.Treeview",
+            background=[
+                ("selected", "#1F6AA5")
+            ],
+            foreground=[
+                ("selected", "white")
+            ]
+        )
+
+        # ==========================================
+        # TABEL DATA BUKU
+        # ==========================================
 
         kolom = (
             "id",
@@ -166,22 +192,18 @@ class BukuView(ctk.CTk):
             self.frame_kanan,
             columns=kolom,
             show="headings",
-            height=15
+            height=15,
+            selectmode="browse",
+            style="Buku.Treeview"
         )
 
-        # ==================================================
-        # KONFIGURASI HEADER TABEL
-        # ==================================================
-
+        # Header Tabel
         self.tabel.heading("id", text="ID")
         self.tabel.heading("judul", text="Judul Buku")
         self.tabel.heading("penulis", text="Penulis")
         self.tabel.heading("tahun", text="Tahun")
 
-        # ==================================================
-        # KONFIGURASI LEBAR KOLOM
-        # ==================================================
-
+        # Lebar Kolom
         self.tabel.column(
             "id",
             width=40,
@@ -204,7 +226,7 @@ class BukuView(ctk.CTk):
             anchor="center"
         )
 
-        # Menampilkan tabel
+        # Menampilkan Tabel
         self.tabel.pack(
             fill="both",
             expand=True,
@@ -213,9 +235,9 @@ class BukuView(ctk.CTk):
         )
 
 
-# ==================================================
-# BLOK EKSEKUSI UNTUK MENJALANKAN TAMPILAN
-# ==================================================
+# ==========================================
+# MENJALANKAN TAMPILAN
+# ==========================================
 
 if __name__ == "__main__":
     app = BukuView()
